@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/activatedBackgroundIndicator">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:textSize="@dimen/textview"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@+id/directoryimage"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberoffiles"
+        android:layout_below="@+id/name"
+        android:layout_toRightOf="@+id/directoryimage"
+        android:textSize="@dimen/textview"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastmodified"
+        android:layout_below="@+id/numberoffiles"
+        android:textColor="@color/black"/>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/directoryimage"
+        android:scaleType="fitXY"/>d
+
+</RelativeLayout>

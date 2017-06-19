@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/share"
+            android:title="@string/share"
+        android:showAsAction="never"/>
+        <item
+            android:id="@+id/delete"
+            android:title="@string/delete"
+            android:showAsAction="always"/>
+        <item
+            android:id="@+id/move"
+            android:title="@string/move"
+            android:showAsAction="never"/>
+        <item
+            android:id="@+id/copy"
+            android:title="@string/copy" />
+        <item
+            android:id="@+id/rename"
+            android:title="@string/rename"
+            android:showAsAction="never"/>
+        <item
+            android:id="@+id/details"
+            android:title="@string/details"
+            android:showAsAction="never"/>
+    <item
+        android:id="@+id/newfolder"
+        android:title="@string/newfolder"
+        android:showAsAction="never"/>
+    <item
+       android:id="@+id/paste"
+        android:title="Paste"/>
+
+
+</menu>

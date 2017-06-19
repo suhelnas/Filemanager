@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    tools:context="com.example.pc.filemanager.Storagetype">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/internalspace"
+    android:textSize="@dimen/buttons"
+    android:textColor="@color/black"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/internal"
+        android:text="@string/internal"
+        android:onClick="internal"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/internal"
+        android:paddingBottom="10sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/externalspace"
+        android:textSize="@dimen/buttons"
+        android:textColor="@color/black"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/external"
+        android:text="@string/external"
+        android:textSize="@dimen/buttons"
+        android:onClick="external"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/microsd"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share App"
+        android:id="@+id/share"
+        android:textColor="@color/black"
+        android:textSize="@dimen/buttons"
+        android:onClick="Share"
+        android:drawableLeft="@drawable/share"/>
+
+</LinearLayout>

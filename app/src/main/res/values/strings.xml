@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">File manager</string>
+    <string name="internal">Internal Memory</string>
+    <string name="external">SDCard Memory</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="copy">Copy</string>
+    <string name="move">Move</string>
+    <string name="share">Share</string>
+    <string name="details">Details</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="newfolder">NewFolder</string>
+    <string name="sortbyname">Sort By Name</string>
+    <string name="sortbysize">Sort By Size</string>
+</resources>
