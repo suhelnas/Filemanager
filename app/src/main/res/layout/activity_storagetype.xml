@@ -21,7 +21,8 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:drawableLeft="@drawable/internal"
-        android:paddingBottom="10sp"/>
+        android:paddingBottom="10sp"
+        android:background="@color/transparent"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +37,8 @@
         android:textSize="@dimen/buttons"
         android:onClick="external"
         android:textColor="@color/black"
-        android:drawableLeft="@drawable/microsd"/>
+        android:drawableLeft="@drawable/microsd"
+        android:background="@color/transparent"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,6 +47,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/buttons"
         android:onClick="Share"
-        android:drawableLeft="@drawable/share"/>
+        android:drawableLeft="@drawable/share"
+        android:background="@color/transparent"/>
 
 </LinearLayout>

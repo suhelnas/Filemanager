@@ -22,12 +22,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class OverflowMenuHandler {
-Context context;
-File to=null;
-   public OverflowMenuHandler(Context context){
-    this.context=context;
-   }
-    public void share(ArrayList<File> file){
+    Context context;
+    File to = null;
+
+    public OverflowMenuHandler(Context context) {
+        this.context = context;
+    }
+
+    public void share(ArrayList<File> file) {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         ArrayList<Uri> files = new ArrayList<Uri>();
@@ -35,14 +37,15 @@ File to=null;
         String extension = name.substring(name.lastIndexOf('.') + 1);
         String mimeType = mimeTypeMap.getMimeTypeFromExtension(extension.toLowerCase());
         intent.setType(mimeType);
-        for(File f:file) {
+        for (File f : file) {
             Uri uri = Uri.fromFile(f);
             files.add(uri);
         }
         intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, files);
         context.startActivity(Intent.createChooser(intent, "Share via"));
     }
-   public File rename(final File file){
+
+    public File rename(final File file) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater1 = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,7 +58,7 @@ File to=null;
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 File from = new File(file.getParent(), file.getName());
-                 to = new File(file.getParent(), "/" + value.getText().toString().trim());
+                to = new File(file.getParent(), "/" + value.getText().toString().trim());
                 boolean rename = from.renameTo(to);
 
             }
@@ -67,7 +70,7 @@ File to=null;
             }
         });
         builder.show();
-       return to;
+        return to;
 
     }
 }

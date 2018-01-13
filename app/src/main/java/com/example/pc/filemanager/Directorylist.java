@@ -1,10 +1,7 @@
 package com.example.pc.filemanager;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,26 +9,29 @@ import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import android.widget.AbsListView.MultiChoiceModeListener;
+
 public class Directorylist extends Activity {
     ListView listView;
     TextView path;
 
     String directoryname;
     ArrayList<File> file;
-    int check=0;
+    int check = 0;
     File f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +51,18 @@ public class Directorylist extends Activity {
         listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-                int checkeditemcount=listView.getCheckedItemCount();
-                f= (File) listView.getItemAtPosition(i);
-                if(f.isDirectory()) {
+                int checkeditemcount = listView.getCheckedItemCount();
+                f = (File) listView.getItemAtPosition(i);
+                if (f.isDirectory()) {
                     check = 1;
                 }
-                actionMode.setTitle(checkeditemcount+" Selected");
+                actionMode.setTitle(checkeditemcount + " Selected");
                 adapter.toggleSelection(i);
             }
 
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                actionMode.getMenuInflater().inflate(R.menu.overflow,menu);
+                actionMode.getMenuInflater().inflate(R.menu.overflow, menu);
                 return true;
             }
 
@@ -74,10 +74,10 @@ public class Directorylist extends Activity {
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                SparseBooleanArray selected =adapter.getSelectedIds();
-                OverflowMenuHandler overflowMenuHandler = new OverflowMenuHandler(Directorylist.this);
+                SparseBooleanArray selected = adapter.getSelectedIds();
+                com.example.pc.filemanager.OverflowMenuHandler overflowMenuHandler = new com.example.pc.filemanager.OverflowMenuHandler(Directorylist.this);
                 switch (menuItem.getItemId()) {
-                    case R.id.delete :
+                    case R.id.delete:
                         for (int i = (selected.size() - 1); i >= 0; i--) {
                             if (selected.valueAt(i)) {
                                 File selecteditem = (File) adapter
@@ -87,33 +87,32 @@ public class Directorylist extends Activity {
                             }
                         }
                         actionMode.finish();
-                                return true;
-                    case R.id.share :
-
-                       if(check==1)
-                            Toast.makeText(Directorylist.this,"Select Files not Directory",Toast.LENGTH_SHORT).show();
-                        else{
-                            ArrayList<File> send=new ArrayList<File>();
+                        return true;
+                    case R.id.share:
+                        if (check == 1)
+                            Toast.makeText(Directorylist.this, "Select Files not Directory", Toast.LENGTH_SHORT).show();
+                        else {
+                            ArrayList<File> send = new ArrayList<File>();
                             for (int i = (selected.size() - 1); i >= 0; i--) {
                                 if (selected.valueAt(i)) {
                                     send.add((File) adapter.getItem(selected.keyAt(i)));
                                 }
                             }
-                           overflowMenuHandler.share(send);
-
-                            }
-                        return true;
-                    case R.id.rename :
-                        if(selected.size()>1)
-                            Toast.makeText(Directorylist.this,"select one",Toast.LENGTH_SHORT).show();
-                        else{
-                             File f=(File) adapter.getItem(selected.keyAt(0));
-                           File rename= overflowMenuHandler.rename(f);
+                            overflowMenuHandler.share(send);
 
                         }
                         return true;
-                    case R.id.copy :
-ArrayList<File> items=new ArrayList<File>();
+                    case R.id.rename:
+                        if (selected.size() > 1)
+                            Toast.makeText(Directorylist.this, "select one", Toast.LENGTH_SHORT).show();
+                        else {
+                            File f = (File) adapter.getItem(selected.keyAt(0));
+                            File rename = overflowMenuHandler.rename(f);
+
+                        }
+                        return true;
+                    case R.id.copy:
+                        ArrayList<File> items = new ArrayList<File>();
                         for (int i = (selected.size() - 1); i >= 0; i--) {
                             if (selected.valueAt(i)) {
                                 items.add((File) adapter.getItem(selected.keyAt(i)));
@@ -126,14 +125,14 @@ ArrayList<File> items=new ArrayList<File>();
 
                         return true;
 
-                  default:
-                    return false;
+                    default:
+                        return false;
                 }
             }
 
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
-           adapter.removeSelection();
+                adapter.removeSelection();
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,11 +160,11 @@ ArrayList<File> items=new ArrayList<File>();
                         } else {
 
                             String file = f.getName();
-                            File imagePath = new File(f.getParent(),"/");
-                            File newFile = new File(imagePath,file);
+                            File imagePath = new File(f.getParent(), "/");
+                            File newFile = new File(imagePath, file);
                             Uri uri = FileProvider.getUriForFile(Directorylist.this, "com.example.pc.filemanager", newFile);
-                            intent.setDataAndType(uri,MimeTypeMap.getSingleton().getMimeTypeFromExtension(file));
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            intent.setDataAndType(uri, MimeTypeMap.getSingleton().getMimeTypeFromExtension(file));
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 
                         }
@@ -177,12 +176,8 @@ ArrayList<File> items=new ArrayList<File>();
 
                     } else
                         Toast.makeText(Directorylist.this, "No application found which can open the file", Toast.LENGTH_SHORT).show();
-
-
                 }
-
             }
-
         });
     }
 
@@ -275,51 +270,56 @@ ArrayList<File> items=new ArrayList<File>();
 
     }*/
 
- /*  @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.overflow, menu);
-        return true;
-    }
+    /*  @Override
+       public boolean onCreateOptionsMenu(Menu menu) {
+           getMenuInflater().inflate(R.menu.overflow, menu);
+           return true;
+       }
+       @Override
+       public boolean onPrepareOptionsMenu(Menu menu){
+          menu.setGroupVisible(R.id.filoperation,false);
+   return true;
+       }
+       @Override
+       public boolean onOptionsItemSelected(MenuItem item) {
+           switch (item.getItemId()) {
+               case R.id.newfolder:
+                   AlertDialog.Builder builder = new AlertDialog.Builder(Directorylist.this);
+                   builder.setTitle("New Folder");
+                   LayoutInflater inflater1 = (LayoutInflater) Directorylist.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                   View dialog = inflater1.inflate(R.layout.newfolder, null);
+                   builder.setView(dialog);
+                   final EditText newfolder= (EditText) dialog.findViewById(R.id.newfolder);
+                   newfolder.setText("NewFolder");
+                   builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+                           File folder=new File(path.getText().toString()+File.separator+newfolder.getText().toString().trim());
+                           boolean created= folder.mkdirs();
+
+
+
+                       }
+                   });
+                   builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) {
+
+                       }
+                   });
+                   builder.show();
+
+                   return true;
+               case R.id.sortbyname:
+                   Collections.sort(file,new SortFileByName());
+                   return true;
+               default:
+                   return super.onOptionsItemSelected(item);
+           }
+       }*/
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
-       menu.setGroupVisible(R.id.filoperation,false);
-return true;
+    public void onRestart() {
+        super.onRestart();
+        this.onCreate(null);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.newfolder:
-                AlertDialog.Builder builder = new AlertDialog.Builder(Directorylist.this);
-                builder.setTitle("New Folder");
-                LayoutInflater inflater1 = (LayoutInflater) Directorylist.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View dialog = inflater1.inflate(R.layout.newfolder, null);
-                builder.setView(dialog);
-                final EditText newfolder= (EditText) dialog.findViewById(R.id.newfolder);
-                newfolder.setText("NewFolder");
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        File folder=new File(path.getText().toString()+File.separator+newfolder.getText().toString().trim());
-                        boolean created= folder.mkdirs();
-
-
-
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                builder.show();
-
-                return true;
-            case R.id.sortbyname:
-                Collections.sort(file,new SortFileByName());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 }

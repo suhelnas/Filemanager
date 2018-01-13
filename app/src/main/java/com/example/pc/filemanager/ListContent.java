@@ -1,39 +1,32 @@
 package com.example.pc.filemanager;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
+import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.pc.filemanager.R.drawable.directoryicon;
-
 
 public class ListContent extends ArrayAdapter {
-ArrayList<File> name;
+    ArrayList<File> name;
     Context context;
     private SparseBooleanArray mSelectedItemsIds;
+
     public ListContent(Context context, int resource, ArrayList<File> name) {
-        super(context, resource,name);
+        super(context, resource, name);
         mSelectedItemsIds = new SparseBooleanArray();
-        this.context=context;
-        this.name=name;
+        this.context = context;
+        this.name = name;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,35 +39,78 @@ ArrayList<File> name;
             v = inflater.inflate(R.layout.listrow, null);
         }
 
-        TextView name= (TextView) v.findViewById(R.id.name);
-        TextView numberoffiles= (TextView) v.findViewById(R.id.numberoffiles);
-        ImageView directory= (ImageView) v.findViewById(R.id.directoryimage);
-        TextView lastmodified= (TextView) v.findViewById(R.id.lastmodified);
+        TextView name = (TextView) v.findViewById(R.id.name);
+        TextView numberoffiles = (TextView) v.findViewById(R.id.numberoffiles);
+        ImageView directory = (ImageView) v.findViewById(R.id.directoryimage);
 
-File f= (File) getItem(position);
+        File f = (File) getItem(position);
         name.setText(f.getName());
-       if(f.isDirectory()) {
-            numberoffiles.setText(f.listFiles().length+"");
-
-           directory.setImageResource(R.drawable.directoryicon);
-
+        if (f.isDirectory()) {
+            directory.setImageResource(0);
+            numberoffiles.setText(f.listFiles().length + "");
+            directory.setImageResource(R.drawable.directoryicon);
         }
-if(f.isFile()){
-    directory.setImageResource(0);
-    numberoffiles.setText(getFileSize(f.length()));
-    if(f.exists()){
-        Glide.with(context).load(f.getAbsolutePath()).into(directory);
 
-
+        if (f.isFile()) {
+            directory.setImageResource(0);
+            String extension = FilenameUtils.getExtension(f.getAbsolutePath());
+            if (f.exists()) {
+                switch (extension) {
+                    case "pdf":
+                        directory.setImageResource(R.drawable.pdf);
+                        break;
+                    case "doc":
+                        directory.setImageResource(R.drawable.doc);
+                        break;
+                    case "pptx":
+                        directory.setImageResource(R.drawable.pptx);
+                        break;
+                    case "docx":
+                        directory.setImageResource(R.drawable.doc);
+                        break;
+                    case "mp3":
+                        directory.setImageResource(R.drawable.music);
+                        break;
+                    case "aac":
+                        directory.setImageResource(R.drawable.music);
+                        break;
+                    case "m4a":
+                        directory.setImageResource(R.drawable.music);
+                        break;
+                    case "jpg":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "png":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "gif":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "bmp":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "mp4":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "mkv":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    case "3gp":
+                        Glide.with(context).load(f.getAbsolutePath()).into(directory);
+                        break;
+                    default:
+                        directory.setImageResource(R.drawable.unknown);
+                }
+            }
+            numberoffiles.setText(getFileSize(f.length()));
+        }
+        return v;
     }
-}
 
-return v;
-    }
     public static String getFileSize(long size) {
         if (size <= 0)
             return "0";
-        final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
@@ -83,9 +119,11 @@ return v;
         name.remove(object);
         notifyDataSetChanged();
     }
+
     public List<File> getfile() {
         return name;
     }
+
     public void toggleSelection(int position) {
         selectView(position, !mSelectedItemsIds.get(position));
     }
